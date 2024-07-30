@@ -3,6 +3,8 @@ import styled from '@emotion/styled';
 import NxWelcome from './nx-welcome';
 
 import { Route, Routes, Link } from 'react-router-dom';
+// import { Ui } from '@label-template-studio/ui';
+import {ThemeProvider} from "@./ui"
 
 const StyledApp = styled.div`
   // Your style here
@@ -11,8 +13,10 @@ const StyledApp = styled.div`
 export function App() {
   return (
     <StyledApp>
-      <NxWelcome title="label-template-studio" />
-
+      <ThemeProvider>
+        Hello world
+        {/* <Ui /> */}
+      </ThemeProvider>
       {/* START: routes */}
       {/* These routes and navigation have been generated for you */}
       {/* Feel free to move and update them to fit your needs */}
