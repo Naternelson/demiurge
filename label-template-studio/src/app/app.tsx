@@ -1,59 +1,43 @@
-import styled from '@emotion/styled';
-
-import NxWelcome from './nx-welcome';
-
-import { Route, Routes, Link } from 'react-router-dom';
-// import { Ui } from '@label-template-studio/ui';
-import {ThemeProvider} from "@./ui"
-
-const StyledApp = styled.div`
-  // Your style here
-`;
+import { ThemeProvider } from '@./ui';
+import { Viewport, ViewportProvider } from '@./shared-components';
+import { Paper } from '@mui/material';
 
 export function App() {
   return (
-    <StyledApp>
-      <ThemeProvider>
-        Hello world
-        {/* <Ui /> */}
-      </ThemeProvider>
-      {/* START: routes */}
-      {/* These routes and navigation have been generated for you */}
-      {/* Feel free to move and update them to fit your needs */}
-      <br />
-      <hr />
-      <br />
-      <div role="navigation">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/page-2">Page 2</Link>
-          </li>
-        </ul>
-      </div>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              This is the generated root route.{' '}
-              <Link to="/page-2">Click here for page 2.</Link>
-            </div>
-          }
-        />
-        <Route
-          path="/page-2"
-          element={
-            <div>
-              <Link to="/">Click here to go back to root page.</Link>
-            </div>
-          }
-        />
-      </Routes>
-      {/* END: routes */}
-    </StyledApp>
+    <ThemeProvider>
+      <ViewportProvider
+      boundaries={{
+        left: 0,
+        right: 0,
+        top: 0, 
+        bottom: 0,
+        minScale: 0,
+        maxScale: 5
+      }}>
+        <Viewport
+          containerProps={{
+            sx: {
+              width: '100vw',
+              height: '100vh',
+            },
+          }}
+        >
+          <Paper
+            sx={{
+              width: '4in',
+              height: '4in',
+              backgroundColor: 'white',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              color: 'black',
+            }}
+          >
+            Hello World
+          </Paper>
+        </Viewport>
+      </ViewportProvider>
+    </ThemeProvider>
   );
 }
 

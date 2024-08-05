@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@./shared-components": ["shared-components/src/index.ts"],
       "@./ui": ["ui/src/index.ts"]
     }
   },
