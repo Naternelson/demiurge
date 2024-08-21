@@ -1,21 +1,21 @@
 import { gridLines } from '@./ui';
 import { Box, BoxProps, styled } from '@mui/material';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useReposition } from './useReposition';
-import { useDraggable } from './useDraggable';
+import { useDraggable, useHasMouseDown } from './useDraggable';
 import { useViewport } from './useViewport';
 
 const Container = styled(Box)(({ theme }) => ({
   position: 'relative',
   flex: 1,
   display: 'flex',
-  backgroundColor: "rgb(30,30,30)",
+  backgroundColor: 'rgb(30,30,30)',
   overflow: 'hidden',
   ...gridLines({}),
 }));
 
 const Content = styled(Box)(({ theme }) => ({
-  position: "absolute",
+  position: 'absolute',
   boxShadow: theme.shadows[1],
 }));
 
@@ -30,19 +30,31 @@ export const Viewport: FC<ViewportProps> = ({
   contentProps,
   children,
 }) => {
-  const {containerRef, contentRef, transition, repositioning} = useViewport();
+  const { containerRef, contentRef, transition, repositioning } = useViewport();
+  const mouseDown = useHasMouseDown(containerRef, 1)
   useReposition();
   useDraggable();
-  
+
+  const containerP = {...containerProps, sx: {
+    ...containerProps?.sx,
+    cursor: repositioning ? 'grabbing' : mouseDown ? "grab" :  'default'
+  }}
   return (
-    <Container {...containerProps} ref={containerRef}>
-      <Content {...contentProps} ref={contentRef}
+    <Container {...containerP} ref={containerRef}>
+      <Content
+        {...contentProps}
+        ref={contentRef}
         sx={{
-          transition: repositioning ?'none' : `all ${transition.duration}ms ${transition.easing}`,
-          ...contentProps?.sx
+
+          transition: repositioning
+            ? 'none'
+            : `all ${transition.duration}ms ${transition.easing}`,
+          ...contentProps?.sx,
         }}
-      
-      >{children}</Content>
+      >
+        {children}
+      </Content>
     </Container>
   );
 };
+

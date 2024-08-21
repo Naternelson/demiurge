@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { RefObject, useCallback, useEffect, useRef, useState } from 'react';
 import { useViewport } from './useViewport';
 import { reposition } from './reposition';
 
@@ -60,16 +60,23 @@ export const useDraggable = () => {
     setRepositioning(false);
     timeout.current = setTimeout(() => {
       const container = containerRef.current;
-      if(!container) return;
+      if (!container) return;
       reposition(container, {
-        boundary: context.boundaries, 
-        centering: context.centering, 
+        boundary: context.boundaries,
+        centering: context.centering,
         getPosition: context.getPosition,
-        setPosition: context.setPosition
-      }
-      )
+        setPosition: context.setPosition,
+      });
     }, transition.delay);
-  }, [containerRef, context.boundaries, context.centering, context.getPosition, context.setPosition, setRepositioning, transition.delay]);
+  }, [
+    containerRef,
+    context.boundaries,
+    context.centering,
+    context.getPosition,
+    context.setPosition,
+    setRepositioning,
+    transition.delay,
+  ]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -84,4 +91,33 @@ export const useDraggable = () => {
       window.removeEventListener('mouseup', onMouseUp);
     };
   }, [containerRef, onMouseDown, onMouseMove, onMouseUp]);
+};
+
+export const useHasMouseDown = (ref: RefObject<HTMLElement>, button = 0) => {
+  const [hasMouseDown, setMouseDownListener] = useState(false);
+
+  const onMouseDown = useCallback(
+    (event: MouseEvent) => {
+      if (event.button !== button) return;
+      setMouseDownListener(true);
+    },
+    [button]
+  );
+
+  const onMouseUp = useCallback(() => {
+    setMouseDownListener(false);
+  }, []);
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+    element.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mouseup', onMouseUp);
+
+    return () => {
+      element.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('mouseup', onMouseUp);
+    };
+  }, [onMouseDown, onMouseUp, ref]);
+  return hasMouseDown;
 };
