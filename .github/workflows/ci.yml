@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD Pipeline
 
 on:
   push:
@@ -9,20 +9,80 @@ on:
       - main
 
 jobs:
-  build:
-
+  lint:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [14, 16]
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm install
-    - run: nx run-many --target=build --all
-    - run: nx run-many --target=test --all
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - run: npm install
+      - run: npx nx affected:lint --parallel --fix --base=origin/main --head=HEAD
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - run: npm install
+      - run: npx nx affected:test --parallel --base=origin/main --head=HEAD
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - run: npm install
+      - run: npx nx affected:build --parallel --base=origin/main --head=HEAD
+
+  android-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - run: npm install
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+      - run: npx nx run my-new-app:build-android
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+      - name: Distribute Android App to Firebase App Distribution
+        run: |
+          firebase appdistribution:distribute android/app/build/outputs/apk/release/app-release.apk \
+          --app "Your Firebase Android App ID" \
+          --token ${{ secrets.FIREBASE_TOKEN }} \
+          --groups "testers"
+
+  ios-build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - run: npm install
+      - name: Install Xcode
+        run: sudo xcode-select -s /Applications/Xcode_13.4.app/Contents/Developer
+      - run: npx nx run my-new-app:build-ios
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+      - name: Distribute iOS App to Firebase App Distribution
+        run: |
+          firebase appdistribution:distribute ios/build/Release-iphoneos/my-new-app.ipa \
+          --app "Your Firebase iOS App ID" \
+          --token ${{ secrets.FIREBASE_TOKEN }} \
+          --groups "testers"

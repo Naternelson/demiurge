@@ -15,7 +15,7 @@
       "!{projectRoot}/src/test-setup.[jt]s",
       "!{projectRoot}/test-setup.[jt]s"
     ],
-    "sharedGlobals": []
+    "sharedGlobals": ["{workspaceRoot}/.gitlab-ci.yml"]
   },
   "nxCloudAccessToken": "MjgyYjE5OGYtNmI3OC00ZmNhLWE4YjYtODIxYmU5YzZlYTU2fHJlYWQtd3JpdGU=",
   "plugins": [

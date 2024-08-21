@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "739498473302",
+    "project_id": "demiurge-10e11",
+    "storage_bucket": "demiurge-10e11.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739498473302:android:8266d0f88403c2aed348f7",
+        "android_client_info": {
+          "package_name": "com.afsmobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOWKELkvrSk0WcNnxqs2EYfLj2TUL283k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
