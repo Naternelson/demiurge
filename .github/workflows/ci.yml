@@ -9,7 +9,7 @@ on:
       - main
 
 env:
-  RUN_IOS: false
+  RUN_IOS: true
 
 jobs:
   lint:
