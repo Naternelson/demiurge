@@ -26,6 +26,7 @@
     "@nx/web": "19.5.3",
     "@nx/webpack": "19.5.3",
     "@nx/workspace": "19.5.3",
+    "@nxtend/firebase": "^12.1.0",
     "@playwright/test": "^1.36.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@react-native-community/cli-platform-android": "~13.6.6",
