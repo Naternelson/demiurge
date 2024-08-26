@@ -19,7 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
       - run: npm install
       - run: npx nx affected:lint --parallel --fix --base=origin/main --head=HEAD
 
@@ -30,7 +30,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
       - run: npm install
       - run: npx nx affected:test --parallel --base=origin/main --head=HEAD
 
@@ -41,7 +41,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
       - run: npm install
       - run: npx nx affected:build --parallel --base=origin/main --head=HEAD
 
@@ -52,7 +52,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
       - run: npm install
       - name: Set up JDK
         uses: actions/setup-java@v3
@@ -77,7 +77,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
       - run: npm install
       - name: Install Xcode
         run: sudo xcode-select -s /Applications/Xcode_13.4.app/Contents/Developer
