@@ -65,7 +65,7 @@ jobs:
       - name: Distribute Android App to Firebase App Distribution
         run: |
           firebase appdistribution:distribute android/app/build/outputs/apk/release/app-release.apk \
-          --app "Your Firebase Android App ID" \
+          --app "1:739498473302:android:8266d0f88403c2aed348f7" \
           --token ${{ secrets.FIREBASE_TOKEN }} \
           --groups "testers"
 
@@ -108,4 +108,4 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
-          firebase deploy --only hosting --project "Your Firebase Project ID"
+          firebase deploy --only hosting --project "demiurge-10e11"
