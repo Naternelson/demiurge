@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import './firebase-config';
 
 import NxWelcome from './nx-welcome';
 
